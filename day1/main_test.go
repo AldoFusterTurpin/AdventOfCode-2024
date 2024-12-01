@@ -7,7 +7,7 @@ import (
 )
 
 //go:embed inputs/input.txt
-var part1 string
+var simple_input string
 
 func Test_getResult(t *testing.T) {
 	tests := []struct {
@@ -15,7 +15,7 @@ func Test_getResult(t *testing.T) {
 		want        int
 	}{
 		{
-			fileContent: part1,
+			fileContent: simple_input,
 			want:        2264607,
 		},
 	}
