@@ -9,8 +9,8 @@ import (
 )
 
 func main() {
-	// inputFile := "inputs/sample.txt"
-	inputFile := "inputs/input.txt"
+	inputFile := "inputs/sample.txt"
+	// inputFile := "inputs/input.txt"
 	b, err := os.ReadFile(inputFile)
 	if err != nil {
 		fmt.Println(err)
@@ -18,7 +18,9 @@ func main() {
 	}
 	fileContent := string(b)
 
-	res, err := getNumberOfSafeReports(fileContent)
+	// res, err := getNumberOfSafeReports(fileContent)
+  toleration := 1
+  res, err := getNumberOfSafeReportsPart2(fileContent, toleration)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
