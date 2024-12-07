@@ -18,7 +18,13 @@ func main() {
 	}
 	fileContent := string(b)
 
-	res, err := getNumberOfSafeReports(fileContent)
+	// res, err := getNumberOfSafeReports(fileContent)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	os.Exit(1)
+	// }
+
+	res, err := getNumberOfSafeReportsPart2(fileContent)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -80,7 +86,7 @@ func adjecentWithMaxDiff(report []int, maxDiff int) bool {
 			return false
 		}
 	}
-  return true
+	return true
 }
 
 func allIncreasing(report []int) bool {
