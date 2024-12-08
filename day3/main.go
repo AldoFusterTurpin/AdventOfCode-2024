@@ -9,7 +9,6 @@ import (
 
 // Check regex.md for explanations about everything regex related.
 var regexStr = `mul\((\d{1,3}),(\d{1,3})\)`
-
 var r = regexp.MustCompile(regexStr)
 
 func main() {
@@ -22,7 +21,8 @@ func main() {
 	}
 
 	fileContent := string(b)
-	res, err := getResult(fileContent)
+	// res, err := getResult(fileContent)
+	res, err := getResultPart2(fileContent)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -31,6 +31,8 @@ func main() {
 	fmt.Println("result is: ", res)
 }
 
+// getResult returns the sum of all the multiplications of all the substrings
+// from input of the form mul(X,Y), like mul(2,4).
 func getResult(input string) (int, error) {
 	total := 0
 	s := r.FindAllStringSubmatch(input, -1)
