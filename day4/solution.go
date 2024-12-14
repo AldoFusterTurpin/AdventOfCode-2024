@@ -12,41 +12,6 @@ func getResult(input string) (int, error) {
 	nCols := len(matrix[0])
 	fmt.Printf("%v rows and %v columns\n", nRows, nCols)
 
-	f := func(i, j int) bool { return i == j }
-	d, err := getDiagonal(input, f, 0, 0)
-	if err != nil {
-		return 0, err
-	}
-	fmt.Println(d)
-
-	f = func(i, j int) bool { return i == j-1 }
-	d, err = getDiagonal(input, f, 0, 1)
-	if err != nil {
-		return 0, err
-	}
-	fmt.Println(d)
-
-	f = func(i, j int) bool { return i == j-2 }
-	d, err = getDiagonal(input, f, 0, 2)
-	if err != nil {
-		return 0, err
-	}
-	fmt.Println(d)
-
-	f = func(i, j int) bool { return i == j+1 }
-	d, err = getDiagonal(input, f, 1, 0)
-	if err != nil {
-		return 0, err
-	}
-	fmt.Println(d)
-
-	f = func(i, j int) bool { return i == j+2 }
-	d, err = getDiagonal(input, f, 2, 0)
-	if err != nil {
-		return 0, err
-	}
-	fmt.Println(d)
-
 	// reversedVertically, err := getReversedVertically(input)
 	// if err != nil {
 	// 	return 0, err
@@ -77,37 +42,12 @@ func getResult(input string) (int, error) {
 	return 0, nil
 }
 
-type conditionCheckFn func(i, j int) bool
-
-// UNUSDED but fun to play with...
-// getDiagonal returns the diagonal of input starting at pos [startI, startJ].
-// conditionCheck is used to decide if the function should return the element at pos [i,j]
-// for all i..j. Depending in which diagonal we are interested, the function will be different.
-func getDiagonal(input string, conditionCheck conditionCheckFn, startI, startJ int) (string, error) {
-	result := bytes.Buffer{}
-	matrix := strings.Split(input, "\n")
-	nRows := len(matrix)
-	nCols := len(matrix[0])
-	for i := startI; i < nRows; i++ {
-		for j := startJ; j < nCols; j++ {
-			if conditionCheck(i, j) {
-				element := matrix[i][j]
-				// s := string(element)
-				// fmt.Println(element)
-				err := result.WriteByte(element)
-				if err != nil {
-					return "", err
-				}
-			}
-		}
-	}
-	return result.String(), nil
-}
-
-// check diagonals.jpg for the explanation.
-func getAllDiagonals(input string) ([]string, error) {
-	input = strings.TrimSpace(input)
-	matrix := strings.Split(input, "\n")
+// getAllDiagonals traverses the input string returning all the diagonals of the matrix
+// by modifying i and j indexes accordingly. Check diagonals.jpg for the explanation (I have
+// included the main diagonal in what is called "right diagonals" in "diagonals.jpg").
+func getAllDiagonals(matrixStr string) ([]string, error) {
+	matrixStr = strings.TrimSpace(matrixStr)
+	matrix := strings.Split(matrixStr, "\n")
 
 	// perform main and right diagonals
 	diagonals := getRightDiagonals(matrix)
@@ -166,11 +106,12 @@ func getRightDiagonals(matrix []string) []string {
 	return diagonals
 }
 
-func print(s []string) {
+/* func print(s []string) {
 	for i := 0; i < len(s); i++ {
 		fmt.Println(s[i])
 	}
 }
+*/
 
 // getReversedVertically returns a copy of input but reversed vertically.
 func getReversedVertically(input string) ([]string, error) {
@@ -220,3 +161,71 @@ func reverseString(s string) (string, error) {
 	}
 	return w.String(), nil
 }
+
+// unused
+// type conditionCheckFn func(i, j int) bool
+
+// UNUSDED but fun to play with while I was solving this...
+// getDiagonal returns the diagonal of input starting at pos [startI, startJ].
+// conditionCheck is used to decide if the function should return the element at pos [i,j]
+// for all i..j. Depending in which diagonal we are interested, the function will be different.
+/* func getDiagonal(input string, conditionCheck conditionCheckFn, startI, startJ int) (string, error) {
+	result := bytes.Buffer{}
+	matrix := strings.Split(input, "\n")
+	nRows := len(matrix)
+	nCols := len(matrix[0])
+	for i := startI; i < nRows; i++ {
+		for j := startJ; j < nCols; j++ {
+			if conditionCheck(i, j) {
+				element := matrix[i][j]
+				// s := string(element)
+				// fmt.Println(element)
+				err := result.WriteByte(element)
+				if err != nil {
+					return "", err
+				}
+			}
+		}
+	}
+	return result.String(), nil
+} */
+
+/*
+To play with
+func getDiagonals_Old() {
+	f := func(i, j int) bool { return i == j }
+	d, err := getDiagonal(input, f, 0, 0)
+	if err != nil {
+		return 0, err
+	}
+	fmt.Println(d)
+
+	f = func(i, j int) bool { return i == j-1 }
+	d, err = getDiagonal(input, f, 0, 1)
+	if err != nil {
+		return 0, err
+	}
+	fmt.Println(d)
+
+	f = func(i, j int) bool { return i == j-2 }
+	d, err = getDiagonal(input, f, 0, 2)
+	if err != nil {
+		return 0, err
+	}
+	fmt.Println(d)
+
+	f = func(i, j int) bool { return i == j+1 }
+	d, err = getDiagonal(input, f, 1, 0)
+	if err != nil {
+		return 0, err
+	}
+	fmt.Println(d)
+
+	f = func(i, j int) bool { return i == j+2 }
+	d, err = getDiagonal(input, f, 2, 0)
+	if err != nil {
+		return 0, err
+	}
+	fmt.Println(d)
+}
+*/
