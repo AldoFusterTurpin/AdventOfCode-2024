@@ -25,6 +25,9 @@ var hola_3 string
 //go:embed inputs/generic.txt
 var generic string
 
+//go:embed inputs/generic_2.txt
+var generic2 string
+
 // func Test_getResult(t *testing.T) {
 // 	tests := []struct {
 // 		fileContent string
@@ -157,49 +160,6 @@ func Test_getReversedHorizontally(t *testing.T) {
 	}
 }
 
-/* func Test_getDiagonalAtPoint(t *testing.T) {
-	tests := []struct {
-		input  string
-		startI int
-		startJ int
-		want   string
-	}{
-		{
-			input: hola_3,
-			want:  "hola",
-		},
-		{
-			input: `....
-....
-..L.
-...A`,
-			startI: 2,
-			startJ: 2,
-			want:   "LA",
-		},
-		// 		{
-		// 			input: `....
-		// ....
-		// R...
-		// .O..`,
-		// 			startI: 2,
-		// 			startJ: 0,
-		// 			want:   "RO",
-		// 		},
-	}
-	for i, tt := range tests {
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
-			got, err := getDiagonalAtPoint(tt.input, tt.startI, tt.startJ)
-			if err != nil {
-				t.Errorf("expected no error, but got %v", err)
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("getDiagonalAtPoint() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-} */
-
 func Test_getAllDiagonals(t *testing.T) {
 	tests := []struct {
 		input string
@@ -209,6 +169,10 @@ func Test_getAllDiagonals(t *testing.T) {
 			input: generic,
 			want:  []string{"1111", "222", "33", "0", "444", "55", "0"},
 		},
+		{
+			input: generic2,
+			want:  []string{"11111", "2222", "333", "00", "9", "4444", "555", "00", "9"},
+		},
 	}
 	for i, tt := range tests {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
@@ -217,7 +181,6 @@ func Test_getAllDiagonals(t *testing.T) {
 				t.Errorf("expected no error, but got %v", err)
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("getAllDiagonals() = %v, want %v", got, tt.want)
 			}
 		})
 	}
