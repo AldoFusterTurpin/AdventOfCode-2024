@@ -6,10 +6,11 @@ import (
 )
 
 func main() {
-	inputFile := "inputs/generic.txt"
+	// inputFile := "inputs/generic.txt"
 	// inputFile := "inputs/hola_3.txt"
 	// inputFile := "inputs/sample.txt"
 	// inputFile := "inputs/input.txt"
+	inputFile := "inputs/sample_part_2.txt"
 	b, err := os.ReadFile(inputFile)
 	if err != nil {
 		fmt.Println(err)

@@ -89,7 +89,7 @@ func Test_reverseString(t *testing.T) {
 	}
 }
 
-func Test_getReversedVertically(t *testing.T) {
+func Test_getRowsReversed(t *testing.T) {
 	tests := []struct {
 		input string
 		want  []string
@@ -121,7 +121,7 @@ func Test_getReversedVertically(t *testing.T) {
 	}
 	for i, tt := range tests {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
-			got, err := mirrorInputVertically(tt.input)
+			got, err := getRowsReversed(tt.input)
 			if err != nil {
 				t.Errorf("expected no error, but got %v", err)
 			}
@@ -176,7 +176,7 @@ func Test_getAllDiagonals(t *testing.T) {
 	}
 	for i, tt := range tests {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
-			got, err := getAllDiagonals(tt.input)
+			got, err := getAllDiagonalsFromString(tt.input)
 			if err != nil {
 				t.Errorf("expected no error, but got %v", err)
 			}
@@ -199,7 +199,7 @@ func Test_getResult(t *testing.T) {
 	}
 	for i, tt := range tests {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
-			got, err := getAllDiagonals(tt.input)
+			got, err := getResult(tt.input)
 			if err != nil {
 				t.Errorf("expected no error, but got %v", err)
 			}

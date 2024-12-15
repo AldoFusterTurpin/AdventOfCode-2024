@@ -9,65 +9,101 @@ import (
 func getResult(input string) (int, error) {
 	matrix := strings.Split(input, "\n")
 	nRows := len(matrix)
-	nCols := len(matrix[0])
-	fmt.Printf("Matrix has %v rows and %v columns\n", nRows, nCols)
+	/* 	nCols := len(matrix[0])
+	   	fmt.Printf("Matrix has %v rows and %v columns\n", nRows, nCols)
 
-	fmt.Println("\ncontents of matrix:")
-	for i := 0; i < nRows; i++ {
-		for j := 0; j < nCols; j++ {
-			fmt.Printf("matrix[%v][%v] is %v\n", i, j, string(matrix[i][j]))
-		}
-		fmt.Println("__________________")
-	}
+	   	fmt.Println("\ncontents of matrix:")
+	   	for i := 0; i < nRows; i++ {
+	   		for j := 0; j < nCols; j++ {
+	   			fmt.Printf("matrix[%v][%v] is %v\n", i, j, string(matrix[i][j]))
+	   		}
+	   		fmt.Println("__________________")
+	   	} */
 
-	reversedVertically, err := mirrorInputVertically(input)
+	rowsReversed, err := getRowsReversed(input)
 	if err != nil {
 		return 0, err
 	}
 
-	reversedHorizontally, err := convertRowsToColumns(input)
+	convertedRowsToColumns, err := convertRowsToColumns(input)
 	if err != nil {
 		return 0, err
 	}
-
-	originalDiagonals, err := getAllDiagonals(input)
-	if err != nil {
-		return 0, err
-	}
-
-	fmt.Println(originalDiagonals)
 
 	total := 0
 	targetString := "XMAS"
+
+	// rows and cols
 	for i := 0; i < nRows; i++ {
-		// left to right
-		total += strings.Count(matrix[i], targetString)
+		row := matrix[i]
+		total += strings.Count(row, targetString)
 
-		// right to left
-		total += strings.Count(reversedVertically[i], targetString)
+		column := convertedRowsToColumns[i]
+		total += strings.Count(column, targetString)
 
-		//
-		total += strings.Count(reversedHorizontally[i], targetString)
+		columnReversed, err := reverseString(column)
+		if err != nil {
+			return 0, err
+		}
+		total += strings.Count(columnReversed, targetString)
 
-		total += strings.Count(reversedHorizontally[i], targetString)
+		rowReversed := rowsReversed[i]
+		total += strings.Count(rowReversed, targetString)
 	}
 
-	fmt.Println("reversedVertically:")
-	print(reversedVertically)
+	// diagonals
+	originalDiagonals, err := getAllDiagonalsFromString(input)
+	if err != nil {
+		return 0, err
+	}
+	diagonalsMirrored, err := getAllDiagonalsFromSliceOfRows(rowsReversed)
+	if err != nil {
+		return 0, err
+	}
 
-	fmt.Println("reversedHorizontally:")
-	print(reversedHorizontally)
+	for i := 0; i < len(originalDiagonals); i++ {
+		originalDiagonal := originalDiagonals[i]
+		total += strings.Count(originalDiagonal, targetString)
 
-	return 0, nil
+		diagonalReversed, err := reverseString(originalDiagonal)
+		if err != nil {
+			return 0, err
+		}
+		total += strings.Count(diagonalReversed, targetString)
+
+		diagonalMirrored := diagonalsMirrored[i]
+		total += strings.Count(diagonalMirrored, targetString)
+
+		reversedDiagonalMirrored, err := reverseString(diagonalMirrored)
+		if err != nil {
+			return 0, err
+		}
+		total += strings.Count(reversedDiagonalMirrored, targetString)
+	}
+
+	return total, nil
 }
 
-// getAllDiagonals traverses the input string returning all the diagonals of the matrix
+// getAllDiagonalsFromString traverses the input string returning all the diagonals of the matrix
 // by modifying i and j indexes accordingly. Check diagonals.jpg for the explanation (I have
 // included the main diagonal in what is called "right diagonals" in "diagonals.jpg").
-func getAllDiagonals(matrixStr string) ([]string, error) {
+func getAllDiagonalsFromString(matrixStr string) ([]string, error) {
 	matrixStr = strings.TrimSpace(matrixStr)
 	matrix := strings.Split(matrixStr, "\n")
 
+	// perform main and right diagonals
+	diagonals := getRightDiagonals(matrix)
+
+	// perform left diagonals
+	leftDiagonals := getLeftDiagonals(matrix)
+	diagonals = append(diagonals, leftDiagonals...)
+	return diagonals, nil
+}
+
+// getAllDiagonalsFromSliceOfRows is the same as getAllDiagonalsFromString but
+// expecting as an input a slice of strings (Matrix splitted)
+// instead of the original Matrix in string format, for convenience.
+func getAllDiagonalsFromSliceOfRows(matrix []string) ([]string, error) {
 	// perform main and right diagonals
 	diagonals := getRightDiagonals(matrix)
 
@@ -131,8 +167,8 @@ func print(s []string) {
 	}
 }
 
-// mirrorInputVertically returns a copy of input but reversed vertically.
-func mirrorInputVertically(input string) ([]string, error) {
+// getRowsReversed returns a copy of input but reversed vertically.
+func getRowsReversed(input string) ([]string, error) {
 	input = strings.TrimSpace(input)
 	matrix := strings.Split(input, "\n")
 	nRows := len(matrix)
