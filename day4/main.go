@@ -9,8 +9,8 @@ func main() {
 	// inputFile := "inputs/generic.txt"
 	// inputFile := "inputs/hola_3.txt"
 	// inputFile := "inputs/sample.txt"
-	// inputFile := "inputs/input.txt"
-	inputFile := "inputs/sample_part_2.txt"
+	inputFile := "inputs/input.txt"
+	// inputFile := "inputs/sample_part_2.txt"
 	b, err := os.ReadFile(inputFile)
 	if err != nil {
 		fmt.Println(err)
@@ -18,7 +18,8 @@ func main() {
 	}
 
 	fileContent := string(b)
-	res, err := getResult(fileContent)
+	res, err := part2(fileContent)
+	// res, err := getResult(fileContent)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

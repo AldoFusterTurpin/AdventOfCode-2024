@@ -19,9 +19,6 @@ var hola string
 //go:embed inputs/hola_2.txt
 var hola_2 string
 
-//go:embed inputs/hola_3.txt
-var hola_3 string
-
 //go:embed inputs/generic.txt
 var generic string
 

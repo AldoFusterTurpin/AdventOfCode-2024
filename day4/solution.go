@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"strings"
 )
 
@@ -161,11 +160,11 @@ func getRightDiagonals(matrix []string) []string {
 	return diagonals
 }
 
-func print(s []string) {
+/* func print(s []string) {
 	for i := 0; i < len(s); i++ {
 		fmt.Println(s[i])
 	}
-}
+} */
 
 // getRowsReversed returns a copy of input but reversed vertically.
 func getRowsReversed(input string) ([]string, error) {
